@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription, Observable } from 'rxjs';
+import { map, filter} from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,9 +35,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       }, 1000);
     });
 
+    //sometimes you dont want to listen to every change, but to a specific result of a calculation of the processed data
+    //this can be done with operators like "map" from rxjs
+
+
+    // customIntervalObservable.pipe(map((data: number) => {
+    //   return 'Round: ' + (data + 1);
+    // }));
+
     //when an error occurs it cancels the observable. It does not complete
 
-    this.firstObsSubscription = customIntervalObservable.subscribe(data => {
+    this.firstObsSubscription = customIntervalObservable.pipe(filter(data => {
+      return data > 0;
+    })).subscribe(data => {
       console.log(data);
       //reacting to error
     }, error => {
