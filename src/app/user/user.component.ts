@@ -13,6 +13,9 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    //params is an Observable (construct to get informed about changed data)
+    //Observables provided by Angular like params are managed by Angular and takes
+    //care about unsubscribing
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
     });
